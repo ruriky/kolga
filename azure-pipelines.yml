@@ -22,3 +22,10 @@ stages:
     displayName: Build
     steps:
       - script: pwd && export && source ./utils/shell_utils.sh && setup_buildkit && ./devops create_images
+- stage: Test
+  displayName: execute tests
+  jobs: test
+    - job: test
+      container: andersinnovations/devops:azure-test
+      steps:
+        - script: source ./utils/shell_utils.sh && set_env_from_devops docker_test_image BUILT_DOCKER_TEST_IMAGE && ./devops test_setup && make test
