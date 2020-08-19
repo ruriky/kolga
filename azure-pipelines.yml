@@ -12,11 +12,6 @@ stages:
 - stage: Build
   displayName: Build image
   jobs:
-  - job: ExportVars
-    container: python:3.8
-    displayName: ExportVars
-    steps:
-      - script: export
   - job: Build
     container: andersinnovations/devops:azure-test
     displayName: Build
