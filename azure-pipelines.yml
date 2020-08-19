@@ -25,6 +25,6 @@ stages:
       displayName: execute tests
       steps:
         - script: pwd && ls -la && devops test_setup && make test
+          workingDirectory: $(Agent.BuildDirectory)
           env:
             BUILT_DOCKER_TEST_IMAGE: $(devops "docker_test_image")
-            workingDirectory: $(Agent.BuildDirectory)
