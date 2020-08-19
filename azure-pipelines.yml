@@ -29,4 +29,8 @@ stages:
       container: andersinnovations/devops:azure-test
       displayName: execute tests
       steps:
+        - script: echo THE VARIABLE IS $BUILT_DOCKER_TEST_IMAGE
+          env:
+            BUILT_DOCKER_TEST_IMAGE: $(./devops "docker_test_image")
+          displayName: testing environment variables
         - script: export PATH=$PATH:$(pwd) && source ./utils/shell_utils.sh && ./devops test_setup && make test
