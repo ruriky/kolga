@@ -23,8 +23,8 @@ stages:
       container: andersinnovations/devops:azure-test
       displayName: execute tests
       steps:
-        - script: ls -la tests/registry/certs && ls /__w/1/s/tests/registry/certs
-        - script: export && pwd && ls -la && ./devops test_setup && docker-compose up -V --abort-on-container-exit --exit-code-from client
+        - bash: ls -la tests/registry/certs && ls /__w/1/s/tests/registry/certs
+        - bash: export && pwd && ls -la && ./devops test_setup && docker-compose up -V --abort-on-container-exit --exit-code-from client
           env:
             PATH: $(PATH):$(Agent.BuildDirectory)
-            BUILT_DOCKER_TEST_IMAGE: $(./devops "docker_test_image")
+            BUILT_DOCKER_TEST_IMAGE: docker.anders.fi/devops/azure-kolga-demo:cbf9a0422ffb9aa2eb51c40a7c6464666bf3e6c5-development
