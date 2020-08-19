@@ -24,6 +24,7 @@ stages:
       container: andersinnovations/devops:azure-test
       displayName: execute tests
       steps:
+        - script: ls -la tests/registry/certs && ls /__w/1/s/tests/registry/certs
         - script: pwd && ls -la && devops test_setup && make test
           workingDirectory: $(Agent.BuildDirectory)
           env:
