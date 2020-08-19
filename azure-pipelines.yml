@@ -31,7 +31,7 @@ stages:
       steps:
         - script: echo PATH IS $PATH && echo THE VARIABLE IS $BUILT_DOCKER_TEST_IMAGE
           env:
-            PATH: $PATH:$(pwd)
+            PATH: $(PATH):$(pwd)
             BUILT_DOCKER_TEST_IMAGE: $(devops "docker_test_image")
           displayName: testing environment variables
         - script: export PATH=$PATH:$(pwd) && source ./utils/shell_utils.sh && ./devops test_setup && make test
