@@ -1,5 +1,6 @@
 trigger:
 - azure-pipelines-dev
+- azure-pipelines-test
 
 resources:
   containers:
@@ -22,3 +23,12 @@ stages:
     displayName: Build
     steps:
       - script: pwd && export && ./devops create_images
+- stage: Test
+  displayName: Run tests
+  jobs:
+  - job: Build
+    displayName: Test
+    steps:
+      - script: pwd && ./devops test_setup && make test
+        env:
+          BUILT_DOCKER_TEST_IMAGE: docker.anders.fi/devops/azure-kolga-demo:azure-pipelines-dev
