@@ -35,7 +35,7 @@ stages:
     container: Kolga
     displayName: Test
     steps:
-      - script: echo '##vso[task.setvariable variable=BUILT_DOCKER_TEST_IMAGE]'$(./devops docker_test_image)
+      - script: echo '##vso[task.setvariable variable=BUILT_DOCKER_TEST_IMAGE]'$(./devops docker_test_image|tail -1)
       - script: pwd && ls -la && export && ./devops test_setup && make test
         env:
           #BUILT_DOCKER_TEST_IMAGE: docker.anders.fi/devops/azure-kolga-demo:azure-pipelines-dev-development
