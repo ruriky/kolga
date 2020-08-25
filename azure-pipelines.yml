@@ -29,12 +29,13 @@ stages:
   - job: PreBuild
     displayName: PreTest
     steps:
-      - bash: ls -la && git clone --single-branch --branch azure-pipelines-dev https://github.com/andersinno/kolga.git
+      - bash: pwd && ls -la
   - job: Build
     dependsOn: PreBuild
     container: Kolga
     displayName: Test
     steps:
-      - script: pwd && ls -la && ./devops test_setup && make test
+      - script: pwd && ls -la && export && ./devops test_setup && make test
         env:
           BUILT_DOCKER_TEST_IMAGE: docker.anders.fi/devops/azure-kolga-demo:azure-pipelines-dev
+          TEST_WORKDIR: $(Agent.BuildDirectory)
