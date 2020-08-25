@@ -27,8 +27,6 @@ services:
     environment:
       - K3S_URL=https://kubernetes:6443
       - K3S_CLUSTER_SECRET=k3stestclustersecret
-    logging:
-      driver: none
 
   helm-registry:
     image: chartmuseum/chartmuseum:v0.10.0
@@ -40,8 +38,6 @@ services:
       - ./tests/charts:/charts
     ports:
       - 8080:8080
-    logging:
-      driver: none
 
   docker-registry:
     image: registry:2
@@ -58,8 +54,6 @@ services:
       - ./tests/registry/auth:/auth
     ports:
       - 5000:5000
-    logging:
-      driver: none
 
   client:
     image: ${BUILT_DOCKER_TEST_IMAGE:-none}
