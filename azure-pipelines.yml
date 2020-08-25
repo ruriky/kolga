@@ -15,20 +15,25 @@ variables:
 - group: kolga-vars
 
 stages:
-- stage: Build
-  displayName: Build image
-  jobs:
-  - job: Build
-    container: Kolga
-    displayName: Build
-    steps:
-      - script: pwd && export && ./devops create_images
+#- stage: Build
+#  displayName: Build image
+#  jobs:
+#  - job: Build
+#    container: Kolga
+#    displayName: Build
+#    steps:
+#      - script: pwd && export && ./devops create_images
 - stage: Test
   displayName: Run tests
   jobs:
+  - job: PreBuild
+    displayName: PreTest
+    steps:
+      - bash: ls -la && git clone --single-branch --branch azure-pipelines-dev https://github.com/andersinno/kolga.git
   - job: Build
+    container: Kolga
     displayName: Test
     steps:
-      - script: pwd && ./devops test_setup && make test
+      - script: pwd && ls -la && ./devops test_setup && make test
         env:
           BUILT_DOCKER_TEST_IMAGE: docker.anders.fi/devops/azure-kolga-demo:azure-pipelines-dev
