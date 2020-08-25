@@ -31,6 +31,7 @@ stages:
     steps:
       - bash: ls -la && git clone --single-branch --branch azure-pipelines-dev https://github.com/andersinno/kolga.git
   - job: Build
+    dependsOn: PreBuild
     container: Kolga
     displayName: Test
     steps:
