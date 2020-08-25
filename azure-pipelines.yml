@@ -26,18 +26,26 @@ stages:
 - stage: Test
   displayName: Run tests
   jobs:
-  - job: PreBuild
+  - job: PreTest
     displayName: PreTest
     steps:
       - bash: pwd && ls -la
-  - job: Build
-    dependsOn: PreBuild
+  - job: GetTestImageName
+    dependsOn: PreTest
     container: Kolga
-    displayName: Test
+    displayName: TestImage
     steps:
       - script: docker-compose version && docker-compose --help && docker-compose run --help
-      - script: echo '##vso[task.setvariable variable=BUILT_DOCKER_TEST_IMAGE]'$(./devops docker_test_image|tail -1)
-      - script: pwd && ls -la && export && ./devops test_setup && make test
+      - script: echo '##vso[task.setvariable variable=BUILT_DOCKER_TEST_IMAGE;isOutput=true]'$(./devops docker_test_image|tail -1)
+        name: setVariable
+      - script: pwd && ls -la && export && BUILT_DOCKER_TEST_IMAGE=$(setVariable.BUILT_DOCKER_TEST_IMAGE) ./devops test_setup 
         env:
-          #BUILT_DOCKER_TEST_IMAGE: docker.anders.fi/devops/azure-kolga-demo:azure-pipelines-dev-development
-          DOCKER_COMPOSE_PROJECT_DIR: $(Agent.BuildDirectory)
+          BUILT_DOCKER_TEST_IMAGE: $(BUILT_DOCKER_TEST_IMAGE)
+  - job: Test
+    dependsOn: GetTestImageName
+    displayName: Test
+    variables:
+      BUILT_DOCKER_TEST_IMAGE: $[ dependencies.GetTestImageName.outputs['setVariable.BUILT_DOCKER_TEST_IMAGE'] ]
+    steps:
+      - script: docker-compose version && docker-compose --help && docker-compose run --help
+      - script: pwd && ls -la && export && make test
