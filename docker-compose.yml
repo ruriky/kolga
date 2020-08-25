@@ -37,7 +37,7 @@ services:
       - STORAGE=local
       - STORAGE_LOCAL_ROOTDIR=/charts
     volumes:
-      - ./tests/charts:/charts
+      - /home/vsts/work/1/s/tests/charts:/charts
     ports:
       - 8080:8080
     logging:
@@ -54,8 +54,8 @@ services:
       - REGISTRY_AUTH_HTPASSWD_REALM=Registry Realm
       - REGISTRY_HTTP_SECRET=2893jrnuiafisg4aw783ih4eoiqty38h98789yrwuehrfjskd948j394
     volumes:
-      - ./tests/registry/certs:/certs
-      - ./tests/registry/auth:/auth
+      - /home/vsts/work/1/s/tests/registry/certs:/certs
+      - /home/vsts/work/1/s/tests/registry/auth:/auth
     ports:
       - 5000:5000
     logging:
@@ -77,7 +77,7 @@ services:
     - TEST_HELM_REGISTRY=http://helm-registry:8080
     volumes:
       - k3s-config:/config
-      - .:/app
+      - /home/vsts/work/1/s/:/app
       - /var/run/docker.sock:/var/run/docker.sock
       - type: bind
         source: /home/vsts/work/1/s/tests/registry/certs/docker_registry.crt
