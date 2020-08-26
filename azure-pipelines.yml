@@ -5,10 +5,10 @@ trigger:
 resources:
   containers:
   - container: Kolga
-    image: devops/azure-kolga-demo:azure-pipelines-dev
+    image: devops/azure-kolga-demo:azure-pipelines-test
     endpoint: docker_anders_fi
   - container: KolgaDev
-    image: devops/azure-kolga-demo:azure-pipelines-dev-development
+    image: devops/azure-kolga-demo:azure-pipelines-test-development
     endpoint: docker_anders_fi
 
 pool:
