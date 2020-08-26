@@ -10,6 +10,7 @@ services:
     tmpfs:
     - /run
     - /var/run
+    privileged: true
     volumes:
     - k3s-server:/var/lib/rancher/k3s
     # This is just so that we get the kubeconfig file out

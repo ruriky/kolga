@@ -18,14 +18,14 @@ variables:
 - group: kolga-vars
 
 stages:
-- stage: Build
-  displayName: Build image
-  jobs:
-  - job: Build
-    container: Kolga
-    displayName: Build
-    steps:
-      - script: pwd && export && ./devops create_images
+#- stage: Build
+#  displayName: Build image
+#  jobs:
+#  - job: Build
+#    container: Kolga
+#    displayName: Build
+#    steps:
+#      - script: pwd && export && ./devops create_images
 - stage: Test
   displayName: Run tests
   jobs:
