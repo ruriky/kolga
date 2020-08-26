@@ -3,7 +3,7 @@
 source utils/kubernetes_tools.sh
 source utils/shell_utils.sh
 
-if [[ ! -z "$@" ]]; then
+if [[ -n "$@" ]]; then
     "$@"
 else
     setup_kubernetes
