@@ -5,7 +5,7 @@ trigger:
 resources:
   containers:
   - container: Kolga
-    image: devops/azure-kolga-demo:azure-pipelines-dev
+    image: devops/azure-kolga-demo:azure-pipelines-dev-development
     endpoint: docker_anders_fi
 
 pool:
@@ -47,3 +47,23 @@ stages:
     steps:
       - script: docker-compose version && docker-compose --help && docker-compose run --help
       - script: pwd && ls -la && export && make test
+  - job: TestStyle
+    container: Kolga
+    displayName: TestStyle
+    steps:
+      - script: pwd && ls -la && export && make style-tests
+  - job: TestTyping
+    container: Kolga
+    displayName: TestTyping
+    steps:
+      - script: pwd && ls -la && export && make typing-tests
+  - job: TestPackages
+    container: Kolga
+    displayName: TestPackages
+    steps:
+      - script: pwd && ls -la && export && make package-tests
+  - job: TestDocs
+    container: Kolga
+    displayName: TestDocs
+    steps:
+      - script: pwd && ls -la && export && make docs
