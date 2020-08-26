@@ -31,6 +31,8 @@ services:
 
   helm-registry:
     image: chartmuseum/chartmuseum:v0.12.0
+    command:
+      - --disable-statefiles
     environment:
       - DEBUG=0
       - STORAGE=local
