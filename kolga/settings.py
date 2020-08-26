@@ -310,7 +310,6 @@ class AzurePipelinesMapper:
 
     @property
     def is_active(self) -> bool:
-        print(env.str("AZURE_HTTP_USER_AGENT", ""))
         return bool(env.str("AZURE_HTTP_USER_AGENT", ""))
 
     @property
