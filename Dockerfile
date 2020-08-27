@@ -109,6 +109,9 @@ RUN apk add --no-cache --virtual .build-deps \
     && apk add --no-cache \
         python3 \
         bash \
+        sudo \
+        nodejs \
+        shadow \
         ca-certificates \
         git \
         make \
@@ -130,22 +133,18 @@ ENTRYPOINT ["docker-entrypoint.sh"]
 # ===================================
 FROM app-base AS development
 # ===================================
-
+LABEL "com.azure.dev.pipelines.agent.handler.node.path"="/usr/bin/node"
 RUN apk add --no-cache --virtual .build-deps \
         build-base \
         python3-dev \
     && poetry install \
     && apk del .build-deps
-RUN apk add --no-cache bash sudo shadow nodejs
-LABEL "com.azure.dev.pipelines.agent.handler.node.path"="/usr/bin/node"
 
 COPY . /app
 
 # ===================================
 FROM app-base AS production
 # ===================================
-RUN apk add --no-cache bash sudo shadow nodejs
 LABEL "com.azure.dev.pipelines.agent.handler.node.path"="/usr/bin/node"
 
 COPY . /app
-CMD ["node"]
